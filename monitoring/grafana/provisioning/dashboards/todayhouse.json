@@ -231,6 +231,60 @@
         },
         "overrides": []
       }
+    },
+    {
+      "id": 9,
+      "type": "logs",
+      "title": "백엔드 로그 (Loki)",
+      "gridPos": {
+        "x": 0,
+        "y": 32,
+        "w": 24,
+        "h": 10
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "expr": "{service=\"backend\"} | json | line_format \"{{.status}} {{.method}} {{.path}} {{.durationMs}}ms {{.msg}}\"",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending"
+      }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "에러 로그 건수 (level=error)",
+      "gridPos": {
+        "x": 0,
+        "y": 42,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "expr": "sum(count_over_time({service=\"backend\", level=\"error\"}[5m]))",
+          "refId": "A",
+          "legendFormat": "errors"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      }
     }
   ]
 }

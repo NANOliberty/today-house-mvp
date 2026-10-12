@@ -52,3 +52,4 @@ backend/uploads/*
 # Monitoring local data
 monitoring/grafana/data/
 monitoring/prometheus/data/
+.pm2-logs/

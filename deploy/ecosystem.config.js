@@ -7,7 +7,7 @@ module.exports = {
       script: 'src/app.js',
       env: { NODE_ENV: 'production', PORT: 5000 },
       max_memory_restart: '300M',
-      time: true,
+      time: false, // pino 가 ISO timestamp 를 넣으므로 PM2 prefix 는 끈다 (Promtail JSON 파싱용)
     },
     {
       name: 'todayhouse-frontend',
