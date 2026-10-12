@@ -1,0 +1,7 @@
+# /etc/ddclient.conf — DuckDNS 로 공인 IP 자동 갱신 (5분 주기는 /etc/default/ddclient 의 daemon=300)
+daemon=300
+syslog=yes
+use=web, web=checkip.dyndns.org
+protocol=duckdns
+password=YOUR_DUCKDNS_TOKEN
+todayhouseee
