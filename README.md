@@ -55,7 +55,20 @@ docker compose up -d            # postgres + backend + frontend + 모니터링
 cd backend && npx prisma migrate dev
 ```
 
+- 호스트에서 DB 접속은 5433 (맥 로컬 Postgres 5432 와 분리)
 - 프론트 http://localhost:3000 · API http://localhost:5001 (macOS는 5000을 AirPlay가 점유해 호스트 포트만 5001로 매핑) · Grafana http://localhost:3001 · Prometheus http://localhost:9090
+
+## 테스트
+
+```bash
+# 테스트 DB 는 compose 의 postgres 안에 todayhouse_test 로 생성됨 (최초 기동 시).
+# 이미 볼륨이 있으면: docker compose exec postgres createdb -U todayhouse todayhouse_test
+cd backend
+DATABASE_URL=postgresql://todayhouse:todayhouse123@localhost:5433/todayhouse_test npx prisma migrate deploy
+npm test
+```
+
+통합 테스트 13개(supertest): 회원가입·로그인·/me, 게시글 CRUD·권한·필터·검색, 좋아요 토글, 댓글. GitHub Actions 에서 push 마다 실행. 처음 돌렸을 때 "삭제된 글 조회 시 404 대신 500" 버그를 잡아 `update`→`updateMany`로 고쳤다.
 
 ## 홈서버 배포
 

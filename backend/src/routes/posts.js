@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { PrismaClient } = require('@prisma/client');
 const authMiddleware = require('../middleware/auth');
+const validate = require('../middleware/validate');
+const { postSchema, commentSchema } = require('../schemas');
 
 const prisma = new PrismaClient();
 
@@ -113,11 +115,18 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const postId = parseInt(id);
 
-    // 조회수 증가
-    await prisma.post.update({
+    if (Number.isNaN(postId)) {
+      return res.status(400).json({ message: '잘못된 게시글 ID 입니다' });
+    }
+
+    // 조회수 증가 — 없는 글이면 updateMany 는 0건 처리하고 넘어간다 (update 는 P2025 로 500 이 났음)
+    const { count } = await prisma.post.updateMany({
       where: { id: postId },
       data: { viewCount: { increment: 1 } }
     });
+    if (count === 0) {
+      return res.status(404).json({ message: '게시글을 찾을 수 없습니다' });
+    }
 
     const post = await prisma.post.findUnique({
       where: { id: postId },
@@ -172,13 +181,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // 게시글 작성
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, validate(postSchema), async (req, res) => {
   try {
     const { title, content, category, imageUrl } = req.body;
-
-    if (!title || !content || !category) {
-      return res.status(400).json({ message: '필수 필드를 입력해주세요' });
-    }
 
     const post = await prisma.post.create({
       data: {
@@ -206,7 +211,7 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // 게시글 수정
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, validate(postSchema), async (req, res) => {
   try {
     const { id } = req.params;
     const { title, content, category, imageUrl } = req.body;
@@ -318,7 +323,7 @@ router.post('/:id/like', authMiddleware, async (req, res) => {
 });
 
 // 댓글 작성
-router.post('/:id/comments', authMiddleware, async (req, res) => {
+router.post('/:id/comments', authMiddleware, validate(commentSchema), async (req, res) => {
   try {
     const { id } = req.params;
     const { content } = req.body;
