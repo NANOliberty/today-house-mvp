@@ -3,18 +3,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
 const authMiddleware = require('../middleware/auth');
+const validate = require('../middleware/validate');
+const { registerSchema, loginSchema } = require('../schemas');
 
 const prisma = new PrismaClient();
 
 // 회원가입
-router.post('/register', async (req, res) => {
+router.post('/register', validate(registerSchema), async (req, res) => {
   try {
     const { email, password, nickname } = req.body;
-
-    // 유효성 검사
-    if (!email || !password || !nickname) {
-      return res.status(400).json({ message: '모든 필드를 입력해주세요' });
-    }
 
     // 중복 확인
     const existingUser = await prisma.user.findFirst({
@@ -61,7 +58,7 @@ router.post('/register', async (req, res) => {
 });
 
 // 로그인
-router.post('/login', async (req, res) => {
+router.post('/login', validate(loginSchema), async (req, res) => {
   try {
     const { email, password } = req.body;
 

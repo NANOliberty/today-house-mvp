@@ -61,6 +61,10 @@ app.use((req, res) => {
   res.status(404).json({ message: '요청한 경로를 찾을 수 없습니다' });
 });
 
-app.listen(PORT, () => {
-  logger.info({ port: PORT, env: process.env.NODE_ENV || 'development' }, 'server started');
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    logger.info({ port: PORT, env: process.env.NODE_ENV || 'development' }, 'server started');
+  });
+}
+
+module.exports = app;
