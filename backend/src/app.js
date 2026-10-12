@@ -11,10 +11,13 @@ const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const uploadRoutes = require('./routes/upload');
 const { metricsMiddleware, metricsHandler } = require('./metrics');
+const logger = require('./logger');
+const requestLogger = require('./middleware/requestLogger');
 
 // 미들웨어
 app.use(cors());
 app.use(metricsMiddleware);
+app.use(requestLogger);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
@@ -36,7 +39,7 @@ app.get('/health', (req, res) => {
 
 // 에러 핸들러
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  logger.error({ err, requestId: req.id, path: req.originalUrl }, 'unhandled error');
   
   // Multer 에러
   if (err.code === 'LIMIT_FILE_SIZE') {
@@ -59,6 +62,5 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
+  logger.info({ port: PORT, env: process.env.NODE_ENV || 'development' }, 'server started');
 });
