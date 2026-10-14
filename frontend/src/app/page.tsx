@@ -37,13 +37,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen pixel-home">
         {/* 배너 섹션 */}
-        <section className="bg-white border-b">
-          <div className="max-w-7xl mx-auto px-4 py-12">
-            <div className="flex justify-between items-center">
+        <section className="pixel-home-band">
+          <div className="max-w-7xl mx-auto px-5 py-10 sm:px-8 sm:py-14">
+            <div className="pixel-hero flex flex-col items-start gap-8 sm:flex-row sm:justify-between sm:items-center">
               <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                <div className="pixel-room" aria-hidden="true"><span /><i /><b /></div>
+                <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-gray-900 mb-4">
                   우리집을 소개해주세요
                 </h1>
                 <p className="text-gray-600">
@@ -52,7 +53,7 @@ export default function Home() {
               </div>
               <Link
                 href="/posts/create"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-medium transition"
+                className="bg-violet-700 hover:bg-violet-800 text-white px-8 py-3 rounded-none font-medium transition"
               >
                 글쓰기
               </Link>
@@ -61,19 +62,19 @@ export default function Home() {
         </section>
 
         {/* 검색 섹션 */}
-        <section className="bg-white border-b">
+        <section className="pixel-home-band">
           <div className="max-w-7xl mx-auto px-4 py-6">
-            <form onSubmit={handleSearch} className="flex gap-2">
+            <form onSubmit={handleSearch} className="flex flex-wrap gap-3">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="게시글을 검색해주세요"
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="min-w-0 flex-1 px-4 py-2 border border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-violet-700"
               />
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition"
+                className="px-6 py-2 bg-violet-700 hover:bg-violet-800 text-white rounded-none font-medium transition"
               >
                 검색
               </button>
@@ -85,7 +86,7 @@ export default function Home() {
                     setSelectedCategory('');
                     fetchPosts();
                   }}
-                  className="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition"
+                  className="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-none font-medium transition"
                 >
                   초기화
                 </button>
@@ -95,7 +96,7 @@ export default function Home() {
         </section>
 
         {/* 카테고리 필터 */}
-        <section className="bg-white border-b sticky top-16 z-40">
+        <section className="pixel-category-bar sticky top-16 z-40">
           <div className="max-w-7xl mx-auto px-4 py-4">
             <div className="flex gap-2 overflow-x-auto pb-2">
               {['전체', '거실', '침실', '주방', '욕실', '복도', '현관'].map(
@@ -103,10 +104,10 @@ export default function Home() {
                   <button
                     key={category}
                     onClick={() => handleCategoryClick(category)}
-                    className={`px-4 py-2 rounded-full font-medium whitespace-nowrap transition ${
+                    className={`px-4 py-2 rounded-none font-medium whitespace-nowrap transition ${
                       (category === '전체' && !selectedCategory) ||
                       selectedCategory === category
-                        ? 'bg-blue-500 text-white'
+                        ? 'bg-violet-700 text-white'
                         : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
                     }`}
                   >
@@ -119,11 +120,11 @@ export default function Home() {
         </section>
 
         {/* 게시글 목록 */}
-        <section className="max-w-7xl mx-auto px-4 py-12">
+        <section className="max-w-7xl mx-auto px-5 py-10 sm:px-8 sm:py-14">
           {isLoading ? (
             <LoadingSpinner />
           ) : posts.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="pixel-empty text-center py-16">
               <p className="text-gray-500 text-lg">게시글이 없습니다</p>
               {searchQuery && (
                 <button
@@ -131,7 +132,7 @@ export default function Home() {
                     setSearchQuery('');
                     fetchPosts();
                   }}
-                  className="mt-4 text-blue-500 hover:text-blue-600"
+                  className="mt-4 text-violet-700 hover:text-violet-800"
                 >
                   검색 초기화
                 </button>
@@ -139,7 +140,7 @@ export default function Home() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-9">
                 {posts.map((post) => (
                   <PostCard key={post.id} post={post} />
                 ))}
@@ -155,7 +156,7 @@ export default function Home() {
                         onClick={() => fetchPosts(page)}
                         className={`px-4 py-2 rounded ${
                           pagination.page === page
-                            ? 'bg-blue-500 text-white'
+                            ? 'bg-violet-700 text-white'
                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                         } transition`}
                       >

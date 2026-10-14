@@ -29,11 +29,11 @@ export default function CreatePostPage() {
       <>
         <Header />
         <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
+          <div className="pixel-panel bg-white p-8 text-center">
             <p className="text-gray-600 mb-4">로그인이 필요합니다</p>
             <button
               onClick={() => router.push('/login')}
-              className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
+              className="px-6 py-2 bg-violet-700 hover:bg-violet-800 text-white rounded-none"
             >
               로그인하기
             </button>
@@ -110,10 +110,10 @@ export default function CreatePostPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 py-12">
-          <div className="bg-white rounded-lg shadow p-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-8">새 글 작성</h1>
+      <main className="min-h-screen pixel-editor">
+        <div className="max-w-4xl mx-auto px-5 py-8 sm:px-8 sm:py-14">
+          <div className="pixel-panel pixel-editor-panel bg-white p-5 sm:p-10">
+            <h1 className="pixel-window-title text-3xl font-black text-gray-900 mb-8">새 글 작성</h1>
 
             {error && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
@@ -121,7 +121,7 @@ export default function CreatePostPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               {/* 카테고리 */}
               <div>
                 <label className="block text-gray-700 font-medium mb-2">
@@ -130,7 +130,7 @@ export default function CreatePostPage() {
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-violet-700"
                 >
                   {CATEGORIES.map((cat) => (
                     <option key={cat} value={cat}>
@@ -150,7 +150,7 @@ export default function CreatePostPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="제목을 입력해주세요"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-violet-700"
                 />
               </div>
 
@@ -159,13 +159,13 @@ export default function CreatePostPage() {
                 <label className="block text-gray-700 font-medium mb-2">
                   이미지 (선택)
                 </label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+                <div className="pixel-upload border-2 border-dashed border-gray-300 p-6 sm:p-10">
                   {imagePreview ? (
                     <div className="text-center">
                       <img
                         src={imagePreview}
                         alt="Preview"
-                        className="max-h-64 mx-auto mb-4 rounded"
+                        className="max-h-96 mx-auto mb-5 border-2 border-[#29243d]"
                       />
                       <button
                         type="button"
@@ -185,12 +185,12 @@ export default function CreatePostPage() {
                         type="file"
                         accept="image/*"
                         onChange={handleImageSelect}
-                        className="hidden"
+                        className="sr-only peer"
                         id="image-input"
                       />
                       <label
                         htmlFor="image-input"
-                        className="cursor-pointer text-blue-500 hover:text-blue-600 font-medium"
+                        className="pixel-upload-label cursor-pointer text-violet-700 hover:text-violet-800 font-bold peer-focus-visible:outline peer-focus-visible:outline-4 peer-focus-visible:outline-offset-4"
                       >
                         이미지를 선택해주세요
                       </label>
@@ -211,24 +211,24 @@ export default function CreatePostPage() {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="내용을 입력해주세요"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-violet-700 resize-none"
                   rows={12}
                 />
               </div>
 
               {/* 버튼 */}
-              <div className="flex gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t-2 border-[#29243d]">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="flex-1 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition disabled:opacity-50"
+                  className="flex-1 px-6 py-3 bg-violet-700 hover:bg-violet-800 text-white rounded-none font-medium transition disabled:opacity-50"
                 >
                   {isLoading ? '작성 중...' : '글 작성'}
                 </button>
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition"
+                  className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-none font-medium transition"
                 >
                   취소
                 </button>

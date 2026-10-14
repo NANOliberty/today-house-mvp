@@ -133,16 +133,16 @@ export default function PostDetailPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 py-12">
+      <main className="min-h-screen pixel-detail">
+        <div className="max-w-5xl mx-auto px-5 py-8 sm:px-8 sm:py-14">
           {/* 게시글 헤더 */}
-          <div className="bg-white rounded-lg p-6 mb-6">
-            <div className="flex justify-between items-start mb-4">
+          <div className="pixel-panel bg-white p-5 sm:p-8 mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-5 mb-6">
               <div>
-                <span className="text-sm bg-blue-100 text-blue-600 px-3 py-1 rounded">
+                <span className="text-sm bg-violet-100 text-violet-800 px-3 py-1 rounded">
                   {post.category}
                 </span>
-                <h1 className="text-4xl font-bold text-gray-900 mt-3 mb-2">
+                <h1 className="text-3xl sm:text-5xl font-black tracking-tight break-words text-gray-900 mt-5 mb-3">
                   {post.title}
                 </h1>
               </div>
@@ -167,7 +167,7 @@ export default function PostDetailPage() {
             {/* 작성자 정보 */}
             <div className="flex items-center justify-between py-4 border-t border-b border-gray-200">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+                <div className="pixel-avatar w-10 h-10 shrink-0"></div>
                 <div>
                   <p className="font-medium text-gray-900">{post.author.nickname}</p>
                   <p className="text-sm text-gray-500">
@@ -183,13 +183,13 @@ export default function PostDetailPage() {
 
           {/* 게시글 이미지 */}
           {post.imageUrl && (
-            <div className="bg-white rounded-lg overflow-hidden mb-6">
-              <div className="relative w-full h-96">
+            <div className="pixel-panel bg-white overflow-hidden mb-8">
+              <div className="relative w-full h-[55vh] min-h-[280px] sm:h-[70vh] sm:max-h-[800px]">
                 <Image
                   src={post.imageUrl}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   priority
                 />
               </div>
@@ -197,8 +197,8 @@ export default function PostDetailPage() {
           )}
 
           {/* 게시글 내용 */}
-          <div className="bg-white rounded-lg p-8 mb-6">
-            <div className="prose prose-sm max-w-none">
+          <div className="pixel-panel bg-white p-6 sm:p-10 mb-8">
+            <div className="max-w-3xl mx-auto text-base sm:text-lg break-words">
               {post.content.split('\n').map((line, i) => (
                 <p key={i} className="mb-4 text-gray-700 leading-relaxed">
                   {line || <br />}
@@ -208,10 +208,10 @@ export default function PostDetailPage() {
           </div>
 
           {/* 액션 버튼 */}
-          <div className="bg-white rounded-lg p-6 mb-6 flex gap-4">
+          <div className="pixel-panel bg-white p-5 sm:p-8 mb-6 flex flex-wrap gap-3">
             <button
               onClick={handleLike}
-              className={`px-6 py-3 rounded-lg font-medium transition ${
+              className={`px-6 py-3 rounded-none font-medium transition ${
                 isLiked
                   ? 'bg-red-100 text-red-600 hover:bg-red-200'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -219,26 +219,26 @@ export default function PostDetailPage() {
             >
               ❤️ 좋아요 {likeCount}
             </button>
-            <div className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium">
+            <div className="px-6 py-3 bg-gray-100 text-gray-700 rounded-none font-medium">
               💬 댓글 {comments.length}
             </div>
           </div>
 
           {/* 댓글 작성 */}
           {user && (
-            <div className="bg-white rounded-lg p-6 mb-6">
+            <div className="pixel-panel bg-white p-5 sm:p-8 mb-8">
               <h3 className="text-lg font-bold text-gray-900 mb-4">댓글 남기기</h3>
               <form onSubmit={handleCommentSubmit} className="space-y-4">
                 <textarea
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="댓글을 입력해주세요"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-violet-700 resize-none"
                   rows={3}
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition"
+                  className="px-6 py-2 bg-violet-700 hover:bg-violet-800 text-white rounded-none font-medium transition"
                 >
                   댓글 작성
                 </button>
@@ -247,7 +247,7 @@ export default function PostDetailPage() {
           )}
 
           {/* 댓글 목록 */}
-          <div className="bg-white rounded-lg p-6">
+          <div className="pixel-panel bg-white p-5 sm:p-8">
             <h3 className="text-lg font-bold text-gray-900 mb-4">
               댓글 {comments.length}
             </h3>
@@ -278,7 +278,7 @@ export default function PostDetailPage() {
                         </button>
                       )}
                     </div>
-                    <p className="text-gray-700">{comment.content}</p>
+                    <p className="text-gray-700 break-words">{comment.content}</p>
                   </div>
                 ))}
               </div>

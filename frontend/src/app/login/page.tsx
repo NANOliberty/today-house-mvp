@@ -33,9 +33,9 @@ export default function LoginPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-          <h1 className="text-3xl font-bold text-center mb-8 text-gray-900">
+      <main className="pixel-auth min-h-[calc(100svh-4rem)] flex items-center justify-center py-12 px-5 sm:py-16">
+        <div className="pixel-panel pixel-auth-panel bg-white p-6 sm:p-10 w-full max-w-md">
+          <h1 className="pixel-window-title text-3xl font-black mb-8 text-gray-900">
             로그인
           </h1>
 
@@ -45,7 +45,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-gray-700 font-medium mb-2">
                 이메일
@@ -55,7 +55,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-violet-700"
                 placeholder="your@email.com"
               />
             </div>
@@ -69,7 +69,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-violet-700"
                 placeholder="비밀번호"
               />
             </div>
@@ -77,16 +77,16 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-violet-700 hover:bg-violet-800 text-white font-medium py-2 rounded-none transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? '로그인 중...' : '로그인'}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-8 pt-6 border-t-2 border-dashed border-[#d8cce9] text-center text-sm">
             <p className="text-gray-600">
               계정이 없으신가요?{' '}
-              <Link href="/register" className="text-blue-500 hover:text-blue-600 font-medium">
+              <Link href="/register" className="text-violet-700 hover:text-violet-800 font-medium">
                 회원가입
               </Link>
             </p>

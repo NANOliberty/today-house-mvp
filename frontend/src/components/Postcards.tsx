@@ -11,10 +11,10 @@ interface PostCardProps {
 export default function PostCard({ post }: PostCardProps) {
   return (
     <Link href={`/posts/${post.id}`}>
-      <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer h-full flex flex-col">
+      <div className="pixel-post-card bg-white overflow-hidden transition cursor-pointer h-full flex flex-col">
         {/* 이미지 */}
         {post.imageUrl ? (
-          <div className="relative w-full h-48 bg-gray-200">
+          <div className="relative w-full aspect-[4/3] bg-gray-200">
             <Image
               src={post.imageUrl}
               alt={post.title}
@@ -24,20 +24,20 @@ export default function PostCard({ post }: PostCardProps) {
             />
           </div>
         ) : (
-          <div className="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+          <div className="pixel-no-image w-full aspect-[4/3] flex items-center justify-center">
             <span className="text-gray-400">이미지 없음</span>
           </div>
         )}
 
         {/* 내용 */}
-        <div className="p-4 flex-1 flex flex-col">
+        <div className="p-5 flex-1 flex flex-col">
           <div className="mb-2">
-            <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">
+            <span className="text-xs bg-violet-100 text-violet-800 px-2 py-1 rounded">
               {post.category}
             </span>
           </div>
 
-          <h3 className="font-bold text-gray-900 mb-2 line-clamp-2">
+          <h3 className="text-lg font-extrabold text-gray-900 mb-2 line-clamp-2">
             {post.title}
           </h3>
 
