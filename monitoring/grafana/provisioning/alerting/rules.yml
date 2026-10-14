@@ -19,11 +19,19 @@ groups:
             relativeTimeRange: { from: 300, to: 0 }
             datasourceUid: prometheus
             model: { expr: 'up{job="backend"}', refId: A }
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              type: reduce
+              expression: A
+              reducer: last
+              settings: { mode: dropNN }
+              refId: B
           - refId: C
             datasourceUid: __expr__
             model:
               type: threshold
-              expression: A
+              expression: B
               conditions: [{ evaluator: { type: lt, params: [1] } }]
               refId: C
 
@@ -43,11 +51,19 @@ groups:
             model:
               expr: '(sum(rate(todayhouse_http_requests_total{status_code=~"5.."}[5m])) or vector(0)) / clamp_min(sum(rate(todayhouse_http_requests_total[5m])), 0.001)'
               refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              type: reduce
+              expression: A
+              reducer: last
+              settings: { mode: dropNN }
+              refId: B
           - refId: C
             datasourceUid: __expr__
             model:
               type: threshold
-              expression: A
+              expression: B
               conditions: [{ evaluator: { type: gt, params: [0.05] } }]
               refId: C
 
@@ -67,10 +83,18 @@ groups:
             model:
               expr: 'min(node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay|squashfs"}) / min(node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay|squashfs"})'
               refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              type: reduce
+              expression: A
+              reducer: last
+              settings: { mode: dropNN }
+              refId: B
           - refId: C
             datasourceUid: __expr__
             model:
               type: threshold
-              expression: A
+              expression: B
               conditions: [{ evaluator: { type: lt, params: [0.10] } }]
               refId: C
