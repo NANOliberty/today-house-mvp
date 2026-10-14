@@ -2,7 +2,9 @@
 
 재부팅 시 기동 순서: Docker(PostgreSQL·모니터링) → Nginx → PM2(백엔드·프론트) → ddclient
 
-1. `docker compose up -d postgres prometheus node-exporter cadvisor grafana`
+1. 모니터링만 띄운다 (postgres 는 기존 컨테이너, 백엔드/프론트는 PM2):
+   `docker compose -f docker-compose.yml -f docker-compose.server.yml up -d prometheus node-exporter cadvisor loki promtail grafana`
+   - 서버 오버레이는 백엔드를 `host.docker.internal:5000` 으로 긁고, 관리 포트를 127.0.0.1 에만 바인딩한다
 2. `cd backend && npx prisma migrate deploy`
 3. `pm2 start deploy/ecosystem.config.js && pm2 save`
 4. Nginx: `deploy/nginx.todayhouse.conf` 를 `/etc/nginx/sites-available/` 에 두고 링크, `certbot --nginx -d todayhouseee.duckdns.org`
