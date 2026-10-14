@@ -9,6 +9,8 @@ groups:
         title: 백엔드 다운
         condition: C
         for: 2m
+        noDataState: Alerting   # 백엔드 다운은 데이터 없음 자체가 장애
+        execErrState: Error
         labels: { severity: critical }
         annotations:
           summary: "todayhouse-backend 가 2분 이상 응답하지 않음 (Prometheus up=0)"
@@ -29,6 +31,8 @@ groups:
         title: 5xx 비율 5% 초과
         condition: C
         for: 5m
+        noDataState: OK         # 5xx 가 0건이면 정상
+        execErrState: Error
         labels: { severity: warning }
         annotations:
           summary: "최근 5분 5xx 응답 비율이 5% 를 넘음"
@@ -37,7 +41,7 @@ groups:
             relativeTimeRange: { from: 600, to: 0 }
             datasourceUid: prometheus
             model:
-              expr: 'sum(rate(todayhouse_http_requests_total{status_code=~"5.."}[5m])) / clamp_min(sum(rate(todayhouse_http_requests_total[5m])), 0.001)'
+              expr: '(sum(rate(todayhouse_http_requests_total{status_code=~"5.."}[5m])) or vector(0)) / clamp_min(sum(rate(todayhouse_http_requests_total[5m])), 0.001)'
               refId: A
           - refId: C
             datasourceUid: __expr__
@@ -51,6 +55,8 @@ groups:
         title: 디스크 여유 10% 미만
         condition: C
         for: 10m
+        noDataState: OK
+        execErrState: Error
         labels: { severity: warning }
         annotations:
           summary: "루트 파일시스템 여유 공간 10% 미만"
