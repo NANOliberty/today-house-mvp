@@ -1,0 +1,29 @@
+# 홈서버 오버레이. 사용:
+#   docker compose -f docker-compose.yml -f docker-compose.server.yml up -d prometheus node-exporter cadvisor loki promtail grafana
+# postgres / backend / frontend 는 서버에서 기존 방식(Docker postgres 별도, PM2)으로 돌므로 여기서 띄우지 않는다.
+services:
+  prometheus:
+    volumes:
+      - ./monitoring/prometheus.server.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: []
+    ports:
+      - "127.0.0.1:9090:9090"   # 외부 미노출, Tailscale/SSH 터널로만
+
+  grafana:
+    ports:
+      - "127.0.0.1:3001:3000"
+
+  loki:
+    ports:
+      - "127.0.0.1:3100:3100"
+
+  node-exporter:
+    ports:
+      - "127.0.0.1:9100:9100"
+
+  cadvisor:
+    ports:
+      - "127.0.0.1:8085:8080"
