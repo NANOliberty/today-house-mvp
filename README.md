@@ -13,6 +13,9 @@
 
 ## 시스템 구성
 
+<img width="1413" height="625" alt="Screenshot 2026-10-19 at 4 54 43 am" src="https://github.com/user-attachments/assets/63364a4e-8579-4588-a3b5-5bb7473e660b" />
+
+
 ```
 인터넷 ── https://todayhouseee.duckdns.org (DuckDNS, ddclient 5분 갱신)
    │
