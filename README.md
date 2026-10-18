@@ -150,4 +150,4 @@ cd backend && npx prisma migrate dev
 
 ## 참고
 
-- 학습공동체 자료(노션): [IP 활용 프로토콜 발표](https://elegant-nest-fad.notion.site/27c3bebba8ba808c819ddc6b07b741cc) · [프록시 호스트·트래픽 라우팅 발표](https://elegant-nest-fad.notion.site/28a3bebba8ba80d289a7e968ec3141b9) · [원격 접속 설정](https://elegant-nest-fad.notion.site/27c3bebba8ba801db483f77f840998b0) · [배포 구성](https://elegant-nest-fad.notion.site/2c33bebba8ba80369c83ec4525a15016)
+- 학습공동체 자료(노션): [IP 활용 프로토콜 발표](https://elegant-nest-fad.notion.site/27c3bebba8ba808c819ddc6b07b741cc) · [프록시 호스트·트래픽 라우팅 발표](https://elegant-nest-fad.notion.site/28a3bebba8ba80d289a7e968ec3141b9) · [원격 접속 설정](https://elegant-nest-fad.notion.site/27c3bebba8ba801db483f77f840998b0)
